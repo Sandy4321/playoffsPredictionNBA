@@ -1,0 +1,31 @@
+TeamName,ShortName,Conference,TeamID
+Atlanta Hawks,ATL,Eastern,1610612737
+Boston Celtics,BOS,Eastern,1610612738
+Brooklyn Nets,NJN,Eastern,1610612751
+Charlotte Bobcats,CHA,Eastern,1610612766
+Chicago Bulls,CHI,Eastern,1610612741
+Cleveland Cavaliers,CLE,Eastern,1610612739
+Detroit Pistons,DET,Eastern,1610612765
+Indiana Pacers,IND,Eastern,1610612754
+Miami Heat,MIA,Eastern,1610612748
+Milwaukee Bucks,MIL,Eastern,1610612749
+New York Knicks,NYK,Eastern,1610612752
+Orlando Magic,ORL,Eastern,1610612753
+Philadelphia 76ers,PHI,Eastern,1610612755
+Toronto Raptors,TOR,Eastern,1610612761
+Washington Wizards,WAS,Eastern,1610612764
+Dallas Mavericks,DAL,Western,1610612742
+Denver Nuggets,DEN,Western,1610612743
+Golden State Warriors,GSW,Western,1610612744
+Houston Rockets,HOU,Western,1610612745
+Los Angeles Clippers,LAC,Western,1610612746
+Los Angeles Lakers,LAL,Western,1610612747
+Memphis Grizzlies,MEM,Western,1610612763
+Minnesota Timberwolves,MIN,Western,1610612750
+New Orleans Pelicans,NOH,Western,1610612740
+Oklahoma City Thunder,OKC,Western,1610612760
+Phoenix Suns,PHX,Western,1610612756
+Portland Trail Blazers,POR,Western,1610612757
+Sacramento Kings,SAC,Western,1610612758
+San Antonio Spurs,SAS,Western,1610612759
+Utah Jazz,UTA,Western,1610612762
