@@ -1,5 +1,3 @@
-
-
 def getSeasonIDs():
     seasonIDs_file = open('seasonIDs.txt', 'r')
     seasonIDs = list()
@@ -44,10 +42,13 @@ def downloadToCSV(queryString):
     header = jsonData['headers']
     rows = jsonData['rowSet']  # 'rows' variable initially does not contain header
     rows.insert(0, header)  # header prepended; 'rows' variable contains header
-    
-    csvFileName = 'test.txt'
 
-    with open('../../data/raw/test.txt', 'w', newline='') as fp:
+    # use information from query string to name CSV files
+    parameters = queryString.split('&')
+    csvFileName = parameters[1][7:] + '_' + parameters[2][7:] + '_' + parameters[0][50:].replace('+', '') + '.txt'
+    csvFilePath = '../../data/raw/' + csvFileName
+
+    with open(csvFilePath, 'w', newline='') as fp:
         csvWriter = csv.writer(fp, delimiter=',')
         csvWriter.writerows(rows)
 
@@ -57,26 +58,11 @@ def downloadTeamStatsNBA(queryStrings):
         downloadToCSV(queryString)
 
 
-# delete later
-import urllib.request 
-import json
-import csv
-
-queryString = 'http://stats.nba.com/stats/teamgamelog?SeasonType=Regular+Season&TeamID=1610612762&Season=2010-11'
-downloadToCSV(queryString)
-# delete later
-
-
-
-
-"""
 def main():
     seasonIDs = getSeasonIDs()  # read and store all season IDs to a list
     teamIDs = getTeamIDs()  # read and store all team IDs to a list
     queryStrings = createQueryStrings(seasonIDs, teamIDs)  # create query strings to NBA API system (which provides JSON data)
-
-    queryStrings = ['http://stats.nba.com/stats/teamgamelog?SeasonType=Regular+Season&TeamID=1610612762&Season=2010-11']
-    convertJSONtoCSV(queryStrings)  # convert JSON data to CSV and download onto local machine
+    downloadTeamStatsNBA(queryStrings)  # convert JSON data to CSV and download onto local machine
 
 
 if __name__ == '__main__':
@@ -86,4 +72,3 @@ if __name__ == '__main__':
     import csv
 
     main()
-"""
