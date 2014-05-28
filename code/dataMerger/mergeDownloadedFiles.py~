@@ -1,0 +1,85 @@
+def verifySameColumnNames(rawDataFilePaths):
+    # store headers (column names) of all text files into a list
+    headers = []
+    for rawDataFilePath in rawDataFilePaths:
+        rawDataFile = open(rawDataFilePath, 'r')
+        header = rawDataFile.readline().strip()
+        headers.append(header)
+        rawDataFile.close()
+
+    # check all the header values in the list are the same
+    return all(x == headers[0] for x in headers)
+
+
+
+def groupFilePathsByTeamID(rawDataFilePaths, teamIDs):
+
+    # dictionary of lists (each comprised of file paths for a single team), with teamIDs used as keys
+    groupedFilePaths = {}
+    for teamID in teamIDs:
+        for rawDataFilePath in list(rawDataFilePaths):  # iterate over a copy of rawDataFilePaths list (because we will be removing elements from the original rawDataFilePaths list)
+            if teamID in rawDataFilePath: 
+                if teamID in groupedFilePaths:  # if groupedFilePaths dictionary has an existing key and a list, append to the list; then remove the file path 
+                    groupedFilePaths[teamID].append(rawDataFilePath)
+                    rawDataFilePaths.remove(rawDataFilePath) 
+                else:  # if groupedFilePaths diction does not have an existing key and a list, create a new key and a list with the team ID
+                    groupedFilePaths[teamID] = [rawDataFilePath]
+                    rawDataFilePaths.remove(rawDataFilePath)
+    return(groupedFilePaths)
+    
+
+
+def mergeDatasetsPerTeam(groupedFilePaths):
+    teamID = groupedFilePaths.keys()[0]
+    singleTeamRawDataFilePaths = groupedFilePaths[teamID]
+
+    mergedOutputFilePath = '../../data/processed/' + teamID + '.txt'
+
+    with open(mergedOutputFilePath, 'w') as outputFile:
+        outputFile.write('FUCK YOU!!!\n')
+        for rawDataFilePath in singleTeamRawDataFilePaths:
+            with open(rawDataFilePath) as inputFile:
+                for line in inputFile:
+                    outputFile.write(line)
+
+
+def main():
+    rawDataFilePaths = glob.glob(os.path.join('../../data/raw/', '*'))  # file paths of all raw data text files
+    teamIDs = helper.getTeamIDs()
+    
+
+    sameColumnNames = verifySameColumnNames(rawDataFilePaths)  # verify that all raw data files share the same column names (important for merging datasets)
+    if sameColumnNames == False:
+        print('Not all text files have the same column names!')
+    else:
+        groupedFilePaths = groupFilePathsByTeamID(rawDataFilePaths, teamIDs)
+        mergeDatasetsPerTeam(groupedFilePaths)
+
+"""
+### DELETE LATER ###
+import glob
+import os
+import sys
+sys.path.insert(0, '../helper')
+import helper
+
+rawDataFilePaths = glob.glob(os.path.join('../../data/raw/', '*'))
+teamIDs = helper.getTeamIDs()
+groupedFilePaths = groupFilePathsByTeamID(rawDataFilePaths, teamIDs)
+mergeDatasetsPerTeam(groupedFilePaths)
+### DELETE LATER ###
+"""
+
+if __name__ == '__main__':
+
+    # import 
+    import glob
+    import os
+
+    # import Howard's helper module
+    import sys
+    sys.path.insert(0, '../helper')
+    import helper
+
+    main()
+
