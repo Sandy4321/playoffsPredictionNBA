@@ -1,23 +1,3 @@
-def getSeasonIDs():
-    seasonIDs_file = open('seasonIDs.txt', 'r')
-    seasonIDs = list()
-    for seasonID in seasonIDs_file:
-        seasonIDs.append(seasonID.strip())
-    seasonIDs_file.close()
-    return seasonIDs
-
-
-def getTeamIDs():
-    teamIDs_file = open('teamIDs.txt', 'r')
-    teamIDs = list()
-    for line in teamIDs_file:
-        line = line.strip().split(',')
-        teamIDs.append(line[3])
-    del teamIDs[0]  # remove the first value (i.e. "TeamID") from the teamIDs list 
-    teamIDs_file.close()
-    return teamIDs
-
-
 def createQueryStrings(seasonIDs, teamIDs):
     # example query string: http://stats.nba.com/stats/teamgamelog?Season=2013-14&SeasonType=Regular+Season&TeamID=1610612745
     baseURL = 'http://stats.nba.com/stats/teamgamelog?'
@@ -29,6 +9,7 @@ def createQueryStrings(seasonIDs, teamIDs):
                 queryString = baseURL + 'SeasonType=' + seasonType + '&' + 'TeamID=' + teamID + '&' + 'Season=' + seasonID
                 queryStrings.append(queryString)
     return queryStrings
+
 
 
 def downloadToCSV(queryString):
@@ -53,22 +34,31 @@ def downloadToCSV(queryString):
         csvWriter.writerows(rows)
 
 
+
 def downloadTeamStatsNBA(queryStrings):
     for queryString in queryStrings:
         downloadToCSV(queryString)
 
 
+
 def main():
-    seasonIDs = getSeasonIDs()  # read and store all season IDs to a list
-    teamIDs = getTeamIDs()  # read and store all team IDs to a list
+    seasonIDs = helper.getSeasonIDs()  # read and store all season IDs to a list
+    teamIDs = helper.getTeamIDs()  # read and store all team IDs to a list
     queryStrings = createQueryStrings(seasonIDs, teamIDs)  # create query strings to NBA API system (which provides JSON data)
     downloadTeamStatsNBA(queryStrings)  # convert JSON data to CSV and download onto local machine
 
 
+
 if __name__ == '__main__':
 
+    # import necessary modules
     import urllib.request
     import json
     import csv
+
+    # import Howard's custom helper module
+    import sys  # need to include a directory of the helper module to directory search list
+    sys.path.insert(0, '../helper')  # need to include a directory of the helper module to directory search list
+    import helper
 
     main()
